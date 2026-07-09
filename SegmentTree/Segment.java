@@ -1,4 +1,4 @@
-class Segment{
+public class Segment{
     int[] seg;
     Segment(int n){
         seg = new int[4*n];
@@ -25,15 +25,19 @@ class Segment{
 
         return query(2*nodeIdx+1,ql,qr,numsLeft,mid) + query(2*nodeIdx+2,ql,qr,mid+1,numsRight);
     }
-    
-}
 
-import java.util.Scanner;
+    void update(int nodeIdx,int numsLeft,int numsRight,int idx,int val){
+        if(numsLeft==numsRight){
+            seg[nodeIdx]=val;
+            return;
+        }
 
-class Solution{
-    public static void main(String[] args){
-        Scanner sc= new Scanner(System.in);
-        System.out.print("Enter Size of Array:- ");
-        int n = sc.nextInt();
+        int mid = numsLeft+(numsRight-numsLeft)/2;
+
+        if(idx<=mid) update(2*nodeIdx+1,numsLeft,mid,idx,val);
+        else update(2*nodeIdx+2,mid+1,numsRight,idx,val);
+
+        seg[nodeIdx] = seg[2*nodeIdx+1]+seg[2*nodeIdx+2];
     }
+
 }
